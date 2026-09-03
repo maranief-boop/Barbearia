@@ -74,16 +74,33 @@ npm run build   # build de produção (typecheck + vite build)
 npm run preview # servir o build localmente
 ```
 
+## Deploy na Cloudflare Pages
+
+O projeto já está pronto para a Cloudflare Pages (`public/_redirects` garante o
+roteamento da SPA e o `.nvmrc` fixa o Node 22):
+
+1. No painel da Cloudflare: **Workers & Pages > Create > Pages > Connect to Git** e selecione o repositório.
+2. Configure o build:
+   - **Framework preset**: `Vite` (ou nenhum)
+   - **Build command**: `npm run build`
+   - **Build output directory**: `dist`
+3. Em **Settings > Environment variables**, adicione as variáveis de produção (as mesmas do `.env.example`):
+   - `VITE_SUPABASE_URL` e `VITE_SUPABASE_ANON_KEY` (obrigatórias — o build as embute no bundle)
+   - Opcionalmente as `VITE_BRAND_*` para personalizar a marca (sem elas, valem os fallbacks)
+4. Clique em **Save and Deploy**. A cada push na `main`, a Cloudflare faz o redeploy automaticamente.
+
+> A `anon key` do Supabase é pública por design — a segurança fica no RLS.
+
 ## Roadmap de implementação
 
 | Etapa | Módulo | Status |
 |---|---|---|
 | 1 | Scaffold + Configuração White-Label | ✅ Concluída |
 | 2 | Migração SQL do banco | ✅ Concluída |
-| 3 | Hooks + tipos + client Supabase | ⬜ Próxima |
-| 4 | Site institucional | ⬜ |
-| 5 | PWA de agendamento 24/7 | ⬜ |
-| 6 | Auth + layout admin | ⬜ |
-| 7 | Kanban de agendamentos | ⬜ |
-| 8 | Financeiro | ⬜ |
-| 9 | CRM + campanhas WhatsApp | ⬜ |
+| 3 | Hooks + tipos + client Supabase | ✅ Concluída |
+| 4 | Site institucional | ✅ Concluída |
+| 5 | PWA de agendamento 24/7 | ✅ Concluída |
+| 6 | Auth + layout admin | ✅ Concluída |
+| 7 | Kanban de agendamentos | ✅ Concluída |
+| 8 | Financeiro | ✅ Concluída |
+| 9 | CRM + campanhas WhatsApp | ✅ Concluída |
