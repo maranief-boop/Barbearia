@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 600">
+  <defs>
+    <radialGradient id="glow" cx="0.5" cy="0.4" r="0.8">
+      <stop offset="0" stop-color="#292524"/>
+      <stop offset="1" stop-color="#0c0a09"/>
+    </radialGradient>
+  </defs>
+  <rect width="600" height="600" fill="url(#glow)"/>
+  <g fill="none" stroke="#f59e0b" stroke-width="12" stroke-linecap="round" opacity="0.9">
+    <path d="M150 470 L150 190"/>
+    <path d="M150 190 Q150 150 190 150 L410 150 Q450 150 450 190"/>
+    <path d="M190 470 L190 210"/>
+    <path d="M230 470 L230 210"/>
+    <path d="M270 470 L270 210"/>
+    <path d="M310 470 L310 210"/>
+    <path d="M350 470 L350 210"/>
+    <path d="M390 470 L390 210"/>
+  </g>
+</svg>
