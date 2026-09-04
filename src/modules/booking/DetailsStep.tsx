@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Loader2 } from 'lucide-react'
-import type { Service } from '@/types/database'
+import type { Appointment, Service } from '@/types/database'
 import { bookAppointment } from '@/lib/booking'
 import { formatDateBR, formatBRL } from '@/lib/date'
 import { ANY_PROFESSIONAL } from './ProfessionalStep'
@@ -11,7 +11,8 @@ interface Props {
   professionalName: string
   date: string
   startTime: string
-  onBooked: () => void
+  /** Chamado com o agendamento criado (retorno da RPC). */
+  onBooked: (appointment: Appointment) => void
 }
 
 function formatPhone(value: string): string {
@@ -45,7 +46,7 @@ export function DetailsStep({
     setSubmitting(true)
     setError(null)
     try {
-      await bookAppointment({
+      const created = await bookAppointment({
         name: name.trim(),
         phone: phone.replace(/\D/g, ''),
         serviceId: service.id,
@@ -53,7 +54,7 @@ export function DetailsStep({
         date,
         startTime,
       })
-      onBooked()
+      onBooked(created)
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Erro ao agendar.')
     } finally {

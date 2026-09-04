@@ -121,7 +121,10 @@ export function BookingPage() {
           professionalName={professionalName}
           date={date}
           startTime={startTime}
-          onBooked={() => setStep(5)}
+          onBooked={(created) => {
+            setAppointment(created)
+            setStep(5)
+          }}
         />
       ) : null}
 
