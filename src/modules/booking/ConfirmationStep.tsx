@@ -1,7 +1,13 @@
 import { CalendarCheck2, CalendarPlus, Home } from 'lucide-react'
 import { Link } from 'react-router-dom'
-import type { Appointment } from '@/types/database'
+import type { Appointment, PaymentPreference } from '@/types/database'
 import { formatDateBR, formatShortTime } from '@/lib/date'
+
+const PAYMENT_MESSAGES: Record<PaymentPreference, string> = {
+  pix: 'Forma de pagamento: Pix — enviaremos as instruções pelo WhatsApp.',
+  cartao: 'Forma de pagamento: Cartão — enviaremos o link de pagamento pelo WhatsApp.',
+  pagar_no_local: 'Forma de pagamento: você paga no local, após o serviço.',
+}
 
 interface Props {
   appointment: Appointment
@@ -25,11 +31,20 @@ export function ConfirmationStep({
       </span>
 
       <div>
-        <h2 className="text-2xl font-bold">Agendamento confirmado!</h2>
+        <h2 className="text-2xl font-bold">
+          Agendamento confirmado com sucesso!
+        </h2>
         <p className="mt-1 text-brand-light/60">
-          Te esperamos no dia marcado. Código: <strong>{code}</strong>
+          Te aguardamos aqui. Obrigado pela preferência!
+        </p>
+        <p className="mt-1 text-sm text-brand-light/50">
+          Código: <strong className="text-brand-primary">{code}</strong>
         </p>
       </div>
+
+      <p className="rounded-xl border border-brand-primary/30 bg-brand-primary/10 px-4 py-3 text-sm text-brand-primary">
+        {PAYMENT_MESSAGES[appointment.payment_preference]}
+      </p>
 
       <div className="w-full rounded-2xl border border-white/10 bg-brand-secondary/50 p-5 text-left text-sm">
         <ul className="space-y-2 text-brand-light/80">

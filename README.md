@@ -34,6 +34,7 @@ Stack: **React + Vite + TypeScript + Tailwind CSS** no front-end e **Supabase** 
 1. No painel do projeto, abra **SQL Editor > New query**.
 2. Cole todo o conteúdo de [`supabase/migrations/001_init.sql`](supabase/migrations/001_init.sql) e clique em **Run**.
 3. O script cria: tabelas (`services`, `professionals`, `business_hours`, `customers`, `appointments`, `payments`, `profiles`), políticas de segurança (RLS), as funções `get_available_slots` e `book_appointment` (usadas pelo agendamento público), a view `revenue_daily` (financeiro) e dados de exemplo.
+4. Em projetos criados antes da migração 002, rode também [`supabase/migrations/002_payment_preference.sql`](supabase/migrations/002_payment_preference.sql) — adiciona a **forma de pagamento escolhida pelo cliente** (`payment_preference`: Pix / Cartão / Pagar no local) e atualiza a RPC `book_appointment`.
 
 ### 3. Criar o usuário administrador (dono da barbearia)
 1. Vá em **Authentication > Users > Add user**.

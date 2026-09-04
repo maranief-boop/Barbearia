@@ -1,9 +1,35 @@
 import { useState } from 'react'
-import { Loader2 } from 'lucide-react'
-import type { Appointment, Service } from '@/types/database'
+import { Banknote, CreditCard, Loader2, QrCode } from 'lucide-react'
+import type { Appointment, PaymentPreference, Service } from '@/types/database'
 import { bookAppointment } from '@/lib/booking'
 import { formatDateBR, formatBRL } from '@/lib/date'
 import { ANY_PROFESSIONAL } from './ProfessionalStep'
+
+const PAYMENT_OPTIONS: {
+  key: PaymentPreference
+  label: string
+  hint: string
+  icon: React.ComponentType<{ className?: string }>
+}[] = [
+  {
+    key: 'pix',
+    label: 'Pix',
+    hint: 'Pague agora e receba a confirmação na hora',
+    icon: QrCode,
+  },
+  {
+    key: 'cartao',
+    label: 'Cartão',
+    hint: 'Enviamos o link de pagamento pelo WhatsApp',
+    icon: CreditCard,
+  },
+  {
+    key: 'pagar_no_local',
+    label: 'Pagar no local',
+    hint: 'Você paga na barbearia, após o serviço',
+    icon: Banknote,
+  },
+] as const
 
 interface Props {
   service: Service
@@ -34,6 +60,7 @@ export function DetailsStep({
 }: Props) {
   const [name, setName] = useState('')
   const [phone, setPhone] = useState('')
+  const [payment, setPayment] = useState<PaymentPreference>('pagar_no_local')
   const [submitting, setSubmitting] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
@@ -53,6 +80,7 @@ export function DetailsStep({
         professionalId: professionalId === ANY_PROFESSIONAL ? null : professionalId,
         date,
         startTime,
+        paymentPreference: payment,
       })
       onBooked(created)
     } catch (err) {
@@ -105,6 +133,37 @@ export function DetailsStep({
           autoComplete="tel"
           className="w-full rounded-xl border border-white/10 bg-brand-secondary/50 px-4 py-3 outline-none transition focus:border-brand-primary"
         />
+      </div>
+
+      <div>
+        <p className="mb-2 text-sm text-brand-light/70">Forma de pagamento</p>
+        <div className="grid gap-2.5 sm:grid-cols-3">
+          {PAYMENT_OPTIONS.map(({ key, label, hint, icon: Icon }) => {
+            const selected = payment === key
+            return (
+              <button
+                key={key}
+                type="button"
+                onClick={() => setPayment(key)}
+                className={`rounded-xl border p-3 text-left transition ${
+                  selected
+                    ? 'border-brand-primary bg-brand-primary/10'
+                    : 'border-white/10 bg-brand-secondary/50 hover:border-brand-primary/40'
+                }`}
+              >
+                <span className="flex items-center gap-2 text-sm font-semibold">
+                  <Icon
+                    className={`h-4 w-4 ${selected ? 'text-brand-primary' : 'text-brand-light/50'}`}
+                  />
+                  {label}
+                </span>
+                <span className="mt-1 block text-xs text-brand-light/50">
+                  {hint}
+                </span>
+              </button>
+            )
+          })}
+        </div>
       </div>
 
       {error ? <p className="text-sm text-red-400">{error}</p> : null}

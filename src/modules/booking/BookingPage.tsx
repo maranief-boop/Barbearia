@@ -128,26 +128,27 @@ export function BookingPage() {
         />
       ) : null}
 
-      {step < 4 ? (
+      {step > 0 && step < 5 ? (
         <div className="mt-8 flex items-center justify-between gap-4">
           <button
             type="button"
             onClick={() => setStep((s) => Math.max(0, s - 1))}
-            disabled={step === 0}
-            className="flex items-center gap-2 rounded-xl border border-white/15 px-5 py-3 text-sm font-semibold transition enabled:hover:border-brand-primary enabled:hover:text-brand-primary disabled:opacity-30"
+            className="flex items-center gap-2 rounded-xl border border-white/15 px-5 py-3 text-sm font-semibold transition enabled:hover:border-brand-primary enabled:hover:text-brand-primary"
           >
             <ArrowLeft className="h-4 w-4" />
             Voltar
           </button>
-          <button
-            type="button"
-            onClick={() => setStep((s) => Math.min(4, s + 1))}
-            disabled={!canContinue}
-            className="flex items-center gap-2 rounded-xl bg-brand-primary px-6 py-3 text-sm font-semibold text-brand-dark transition enabled:hover:opacity-90 disabled:opacity-40"
-          >
-            Continuar
-            <ArrowRight className="h-4 w-4" />
-          </button>
+          {step < 4 ? (
+            <button
+              type="button"
+              onClick={() => setStep((s) => Math.min(4, s + 1))}
+              disabled={!canContinue}
+              className="flex items-center gap-2 rounded-xl bg-brand-primary px-6 py-3 text-sm font-semibold text-brand-dark transition enabled:hover:opacity-90 disabled:opacity-40"
+            >
+              Continuar
+              <ArrowRight className="h-4 w-4" />
+            </button>
+          ) : null}
         </div>
       ) : null}
     </BookingShell>

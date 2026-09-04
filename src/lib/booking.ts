@@ -1,5 +1,5 @@
 import { supabase } from '@/lib/supabase'
-import type { Appointment } from '@/types/database'
+import type { Appointment, PaymentPreference } from '@/types/database'
 
 export interface BookAppointmentInput {
   name: string
@@ -11,6 +11,7 @@ export interface BookAppointmentInput {
   date: string
   /** "HH:mm" ou "HH:mm:ss" */
   startTime: string
+  paymentPreference: PaymentPreference
 }
 
 /**
@@ -28,6 +29,7 @@ export async function bookAppointment(
     p_professional_id: input.professionalId,
     p_appointment_date: input.date,
     p_start_time: input.startTime,
+    p_payment_preference: input.paymentPreference,
   })
   if (error) throw new Error(error.message)
   return data as Appointment

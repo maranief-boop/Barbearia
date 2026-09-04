@@ -10,6 +10,15 @@ export type AppointmentStatus =
 
 export type PaymentMethod = 'dinheiro' | 'pix' | 'cartao'
 
+/** Forma de pagamento escolhida pelo cliente no agendamento. */
+export type PaymentPreference = 'pix' | 'cartao' | 'pagar_no_local'
+
+export const PAYMENT_PREFERENCE_LABELS: Record<PaymentPreference, string> = {
+  pix: 'Pix (agora)',
+  cartao: 'Cartão (agora)',
+  pagar_no_local: 'Pagar no local, após o serviço',
+}
+
 export const APPOINTMENT_STATUS_LABELS: Record<AppointmentStatus, string> = {
   agendado: 'Agendado',
   em_atendimento: 'Na Barbearia',
@@ -73,6 +82,7 @@ export interface Appointment {
   end_time: string
   status: AppointmentStatus
   price: number
+  payment_preference: PaymentPreference
   notes: string | null
   created_at: string
 }
