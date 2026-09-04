@@ -139,7 +139,22 @@ export function ClientesPage() {
                   </span>
 
                   <div className="min-w-0 flex-1">
-                    <p className="font-semibold">{c.name}</p>
+                    <div className="flex flex-wrap items-center gap-2">
+                      <p className="font-semibold">{c.name}</p>
+                      {daysSince !== null ? (
+                        <span
+                          className={`rounded-full px-2 py-0.5 text-[11px] font-semibold ${
+                            daysSince > 45
+                              ? 'bg-red-500/15 text-red-300'
+                              : daysSince > 30
+                                ? 'bg-amber-500/15 text-amber-300'
+                                : 'bg-green-500/15 text-green-300'
+                          }`}
+                        >
+                          {daysSince}d sem voltar
+                        </span>
+                      ) : null}
+                    </div>
                     <p className="flex items-center gap-1.5 text-sm text-brand-light/60">
                       <Phone className="h-3.5 w-3.5" />
                       {formatPhoneBR(c.phone)}
@@ -154,7 +169,7 @@ export function ClientesPage() {
                       <span className="inline-flex items-center gap-1">
                         <CalendarClock className="h-3 w-3" />
                         {c.stats.lastVisit
-                          ? `Última: ${formatDateBR(c.stats.lastVisit)}${c.stats.lastService ? ` (${c.stats.lastService})` : ''}${daysSince !== null ? ` · ${daysSince}d` : ''}`
+                          ? `Última: ${formatDateBR(c.stats.lastVisit)}${c.stats.lastService ? ` (${c.stats.lastService})` : ''}`
                           : 'Sem visitas'}
                       </span>
                     </p>

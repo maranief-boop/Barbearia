@@ -27,6 +27,10 @@ export function startOfMonth(date: Date): Date {
   return new Date(date.getFullYear(), date.getMonth(), 1)
 }
 
+export function addMonths(date: Date, months: number): Date {
+  return new Date(date.getFullYear(), date.getMonth() + months, 1)
+}
+
 export function startOfYear(date: Date): Date {
   return new Date(date.getFullYear(), 0, 1)
 }
